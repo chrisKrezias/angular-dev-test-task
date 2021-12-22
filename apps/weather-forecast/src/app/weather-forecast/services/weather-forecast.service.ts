@@ -24,7 +24,7 @@ export class WeatherForecastService {
 		return this.http.get(
 			`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=current,minutely,${this.excludedModeMap.get(
 				mode
-			)},alerts&appid=${API_KEY}`
+			)},alerts&units=metric&appid=${API_KEY}`
 		);
 	}
 }

@@ -1,77 +1,115 @@
+@import './../../../../styles/utilities';
+
 %pointer {
 	pointer-events: all;
 	cursor: pointer;
 }
 
-.label {
-	pointer-events: none;
-	display: flex;
-	align-items: center;
-
-	.left,
-	.right {
-		margin: 0 0.5em;
-		font-weight: bold;
-		text-transform: uppercase;
-		font-family: sans-serif;
+.form-container {
+	h2 {
+		font-size: 30px;
+		padding-bottom: 20px;
 	}
 
-	.switch {
-		position: relative;
-		display: inline-block;
-		width: 60px;
-		height: 34px;
-		@extend %pointer;
+	.form-wrapper {
+		justify-content: center;
 
-		.slider {
-			position: absolute;
-			cursor: pointer;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background-color: #ccc;
-			-webkit-transition: 0.4s;
-			transition: 0.4s;
-			border-radius: 34px;
-			background-color: green;
+		.form-group {
+			text-align: center;
 
-			&:before {
-				position: absolute;
-				content: '';
-				height: 26px;
-				width: 26px;
-				left: 4px;
-				bottom: 4px;
-				background-color: white;
-				-webkit-transition: 0.4s;
-				transition: 0.4s;
-				border-radius: 50%;
+			input[type='text'] {
+				min-height: 50px;
+				min-width: 400px;
+				border: 0;
+				border-bottom: 1px solid $secondary-color;
+				margin-bottom: 20px;
+
+				&:focus,
+				&:active {
+					outline: none;
+				}
+
+				&::placeholder {
+					font-size: 18px;
+				}
+			}
+
+			&.toggler {
+				.label {
+					pointer-events: none;
+					margin-bottom: 20px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					.left,
+					.right {
+						margin: 0 0.5em;
+						font-weight: bold;
+						text-transform: uppercase;
+						font-family: sans-serif;
+					}
+
+					.switch {
+						position: relative;
+						display: inline-block;
+						width: 46px;
+						height: 25px;
+						@extend %pointer;
+
+						.slider {
+							position: absolute;
+							cursor: pointer;
+							top: 0;
+							left: 0;
+							right: 0;
+							bottom: 0;
+							background-color: #ccc;
+							-webkit-transition: 0.4s;
+							transition: 0.4s;
+							border-radius: 34px;
+							background-color: $primary-color;
+
+							&:before {
+								position: absolute;
+								content: '';
+								height: 17px;
+								width: 17px;
+								left: 4px;
+								bottom: 4px;
+								background-color: white;
+								-webkit-transition: 0.4s;
+								transition: 0.4s;
+								border-radius: 50%;
+							}
+						}
+					}
+				}
+
+				.input {
+					display: none;
+
+					&:checked {
+						& + .label .slider {
+							background-color: $primary-color;
+
+							&:before {
+								-webkit-transform: translateX(21px);
+								-ms-transform: translateX(21px);
+								transform: translateX(21px);
+							}
+						}
+
+						& + .label .left {
+							@extend %pointer;
+						}
+					}
+
+					&:not(:checked) + .label .right {
+						@extend %pointer;
+					}
+				}
 			}
 		}
-	}
-}
-
-.input {
-	display: none;
-
-	&:checked {
-		& + .label .slider {
-			background-color: blue;
-
-			&:before {
-				-webkit-transform: translateX(26px);
-				-ms-transform: translateX(26px);
-				transform: translateX(26px);
-			}
-		}
-
-		& + .label .left {
-			@extend %pointer;
-		}
-	}
-
-	&:not(:checked) + .label .right {
-		@extend %pointer;
 	}
 }

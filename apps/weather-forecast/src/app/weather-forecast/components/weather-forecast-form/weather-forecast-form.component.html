@@ -1,15 +1,22 @@
-<form [formGroup]="form">
-	<label for="city">City:</label>
-	<input formControlName="city" type="text" id="city" name="city" /><br /><br />
+<div class="form-container flex-center">
+	<div class="form-wrapper flex-center">
+		<form [formGroup]="form">
+			<div class="form-group flex-center">
+				<input formControlName="city" type="text" id="city" name="city" placeholder="Search for a city" />
+			</div>
 
-	<input formControlName="modeToggle" class="input" id="mode-toggle" name="mode-toggle" type="checkbox" />
-	<label class="label" for="mode-toggle">
-		<div class="left">Hourly</div>
+			<div class="form-group toggler">
+				<input formControlName="modeToggle" class="input" id="mode-toggle" name="mode-toggle" type="checkbox" />
+				<label class="label" for="mode-toggle">
+					<div class="left">Hourly</div>
 
-		<div class="switch">
-			<span class="slider"></span>
-		</div>
+					<div class="switch">
+						<span class="slider"></span>
+					</div>
 
-		<div class="right">Daily</div>
-	</label>
-</form>
+					<div class="right">Daily</div>
+				</label>
+			</div>
+		</form>
+	</div>
+</div>

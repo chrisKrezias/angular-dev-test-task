@@ -1,22 +1,30 @@
 <ng-container *ngIf="forecast$ | async as forecastData; else noForecast">
-	<table *ngIf="forecastData.tableData && forecastData.tableData.columnLabels.length; else noForecast">
-		<thead>
-			<tr>
-				<th>-</th>
-				<th>City Name</th>
-				<th *ngFor="let label of forecastData.tableData.columnLabels">{{ label }}</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let label of forecastData.tableData.rowLabels; let i = index">
-				<td>{{ label }}</td>
-				<td>{{ forecastData.cityName }}</td>
-				<td *ngFor="let value of forecastData.tableData.values[i]">
-					{{ value }}
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="table" *ngIf="forecastData.tableData && forecastData.tableData.columnLabels.length; else noForecast">
+		<div class="row">
+			<div class="cell cell-header">{{ forecastData.cityName }} Weather Forecast</div>
+
+			<ng-container *ngIf="forecastData.periodMode === PeriodMode.Daily">
+				<div *ngFor="let label of forecastData.tableData.columnLabels" class="cell cell-header">
+					<div class="date flex-center">{{ label | date: 'd' }}</div>
+					<div class="day">{{ label | date: 'E' }}</div>
+				</div>
+			</ng-container>
+
+			<ng-container *ngIf="forecastData.periodMode === PeriodMode.Hourly">
+				<div *ngFor="let label of forecastData.tableData.columnLabels" class="cell cell-header flex-center">
+					<div class="day">{{ label | date: 'HH:MM' }}</div>
+				</div>
+			</ng-container>
+		</div>
+		<div *ngFor="let label of forecastData.tableData.rowLabels; let i = index" class="row row-content">
+			<div class="cell">{{ label }}</div>
+			<div class="cell" *ngFor="let value of forecastData.tableData.values[i]">
+				<div class="temp">{{ value }}&#8451;</div>
+			</div>
+		</div>
+	</div>
 </ng-container>
 
-<ng-template #noForecast> No forecast data found </ng-template>
+<ng-template #noForecast>
+	<p class="message">No forecast data found</p>
+</ng-template>
