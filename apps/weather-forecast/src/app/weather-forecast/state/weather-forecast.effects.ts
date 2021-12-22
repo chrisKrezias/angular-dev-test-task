@@ -16,8 +16,7 @@ export class WeatherForecastEffects {
 			mergeMap(({ city }) =>
 				this.weatherForecastService.getCoordinates(city).pipe(
 					map(coordinates => {
-						console.log(coordinates);
-						if (coordinates.length) {
+						if (city && coordinates.length) {
 							return {
 								type: WeatherForecastActions.UpdateCoordinates,
 								lat: coordinates[0].lat,

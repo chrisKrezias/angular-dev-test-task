@@ -14,8 +14,7 @@ export interface IWeatherForecastStateDetails {
 	mode: PeriodMode;
 	lat: number;
 	lon: number;
-	hourlyData: IForecastHourlyData[];
-	dailyData: IForecastDailyData[];
+	data: (IForecastHourlyData | IForecastDailyData)[];
 	isCityValid: boolean;
 }
 

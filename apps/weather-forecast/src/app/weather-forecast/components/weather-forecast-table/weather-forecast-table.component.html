@@ -1,1 +1,22 @@
-<p>weather-forecast-table works!</p>
+<ng-container *ngIf="forecast$ | async as forecastData; else noForecast">
+	<table *ngIf="forecastData.tableData && forecastData.tableData.columnLabels.length; else noForecast">
+		<thead>
+			<tr>
+				<th>-</th>
+				<th>City Name</th>
+				<th *ngFor="let label of forecastData.tableData.columnLabels">{{ label }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let label of forecastData.tableData.rowLabels; let i = index">
+				<td>{{ label }}</td>
+				<td>{{ forecastData.cityName }}</td>
+				<td *ngFor="let value of forecastData.tableData.values[i]">
+					{{ value }}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</ng-container>
+
+<ng-template #noForecast> No forecast data found </ng-template>

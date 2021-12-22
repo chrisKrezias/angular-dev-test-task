@@ -14,8 +14,7 @@ const initialState: IWeatherForecastStateDetails = {
 	mode: PeriodMode.Hourly,
 	lat: 0,
 	lon: 0,
-	hourlyData: [],
-	dailyData: [],
+	data: [],
 	isCityValid: false,
 };
 
@@ -26,10 +25,10 @@ const _weatherForecastReducer = createReducer(
 	on(updateCoordinates, (state, { lat, lon, isCityValid }) => ({ ...state, lat, lon, isCityValid })),
 	on(updateForecast, (state, { hourlyData, dailyData }) => ({
 		...state,
-		hourlyData,
+		data: hourlyData.length ? hourlyData : dailyData,
 		dailyData,
 	})),
-	on(setCityInvalid, state => ({ ...state, isCityValid: false, hourlyData: [], dailyData: [], lat: 0, lon: 0 }))
+	on(setCityInvalid, state => ({ ...state, isCityValid: false, data: [], dailyData: [], lat: 0, lon: 0 }))
 );
 
 export function weatherForecastReducer(state: IWeatherForecastStateDetails, action: Action) {
