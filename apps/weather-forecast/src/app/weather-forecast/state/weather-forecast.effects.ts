@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { EMPTY, of } from 'rxjs';
-import { map, mergeMap, catchError, withLatestFrom, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map, mergeMap, catchError, withLatestFrom } from 'rxjs/operators';
 import { PeriodMode } from '../enums/period-mode.enum';
 import { WeatherForecastService } from '../services/weather-forecast.service';
 import { WeatherForecastActions } from './weather-forecast.actions';
@@ -29,7 +29,11 @@ export class WeatherForecastEffects {
 							type: WeatherForecastActions.setCityInvalid,
 						};
 					}),
-					catchError(() => EMPTY)
+					catchError(error =>
+						of({
+							type: WeatherForecastActions.setCityInvalid,
+						})
+					)
 				)
 			)
 		)
@@ -39,7 +43,6 @@ export class WeatherForecastEffects {
 		this.actions$.pipe(
 			ofType(WeatherForecastActions.UpdateCoordinates),
 			withLatestFrom(this.store$),
-			tap(([{ lat, lon }, storeState]) => console.log([{ lat, lon }, storeState])),
 			mergeMap(([{ lat, lon }, storeState]) => this.getForecast$(lat, lon, storeState.weatherForecastState.mode))
 		)
 	);
@@ -48,7 +51,6 @@ export class WeatherForecastEffects {
 		this.actions$.pipe(
 			ofType(WeatherForecastActions.UpdatePeriodMode),
 			withLatestFrom(this.store$),
-			tap(([mode, storeState]) => console.log([mode, storeState])),
 			mergeMap(([mode, storeState]) => {
 				if (storeState.weatherForecastState.isCityValid) {
 					return this.getForecast$(
@@ -79,6 +81,10 @@ export class WeatherForecastEffects {
 				hourlyData: forecast.hourly || [],
 				dailyData: forecast.daily || [],
 			})),
-			catchError(() => EMPTY)
+			catchError(() =>
+				of({
+					type: WeatherForecastActions.setCityInvalid,
+				})
+			)
 		);
 }

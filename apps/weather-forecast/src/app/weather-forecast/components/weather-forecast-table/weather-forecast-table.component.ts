@@ -1,4 +1,4 @@
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -21,8 +21,7 @@ export class WeatherForecastTableComponent {
 				cityName: city,
 				periodMode: mode,
 				tableData: city ? ForecastTableBuilderFactory.getBuilder(mode).build(data) : null,
-			})),
-			tap(({ tableData }) => console.log(tableData))
+			}))
 		);
 	}
 }
