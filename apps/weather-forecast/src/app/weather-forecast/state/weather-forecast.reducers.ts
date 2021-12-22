@@ -25,7 +25,7 @@ const _weatherForecastReducer = createReducer(
 	on(updateCoordinates, (state, { lat, lon, isCityValid }) => ({ ...state, lat, lon, isCityValid })),
 	on(updateForecast, (state, { hourlyData, dailyData }) => ({
 		...state,
-		data: hourlyData.length ? hourlyData : dailyData,
+		data: hourlyData && hourlyData.length ? hourlyData : dailyData,
 		dailyData,
 	})),
 	on(setCityInvalid, state => ({ ...state, isCityValid: false, data: [], dailyData: [], lat: 0, lon: 0 }))
