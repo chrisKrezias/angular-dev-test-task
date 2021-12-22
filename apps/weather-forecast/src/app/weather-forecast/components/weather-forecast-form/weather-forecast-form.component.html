@@ -1,1 +1,15 @@
-<p>weather-forecast-form works!</p>
+<form [formGroup]="form">
+	<label for="city">City:</label>
+	<input formControlName="city" type="text" id="city" name="city" /><br /><br />
+
+	<input formControlName="modeToggle" class="input" id="mode-toggle" name="mode-toggle" type="checkbox" />
+	<label class="label" for="mode-toggle">
+		<div class="left">Hourly</div>
+
+		<div class="switch">
+			<span class="slider"></span>
+		</div>
+
+		<div class="right">Daily</div>
+	</label>
+</form>
